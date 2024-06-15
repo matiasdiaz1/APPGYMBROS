@@ -1,0 +1,56 @@
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+<link href="{% static 'gymapp/css/bootstrap.min.css' %}" rel="stylesheet">
+<script src="{% static 'gymapp/js/bootstrap.bundle.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'estilos/style.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+    .btn-custom {
+        background-color: #7241b4;
+        border-color: #7241b4;
+    }
+    .btn-custom:hover {
+        background-color: #5e3791;
+        border-color: #5e3791;
+    }
+    .btn-danger-custom {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    .btn-danger-custom:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+</style>
+{% endblock %}
+
+{% block contenido %}
+<div class="container px-5 my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mt-3">Eliminar Persona</h3>
+                    <div class="alert alert-danger" role="alert">
+                        <h1>Atención:</h1>
+                        <p><strong>Está a punto de eliminar un registro:</strong></p>
+                        <p>Nombre: {{ persona.nombre }}</p>
+                        <p>RUT: {{ persona.rut }}</p>
+                        <p>Esta acción no se puede deshacer.</p>
+                    </div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between mt-4">
+                            <input type="submit" class="btn btn-danger-custom text-light" value="Eliminar definitivamente">
+                            <a href="{% url 'personas' %}" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

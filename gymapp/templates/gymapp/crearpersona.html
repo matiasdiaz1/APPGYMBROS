@@ -1,0 +1,39 @@
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+<link href="{% static 'gymapp/css/bootstrap.min.css' %}" rel="stylesheet">
+<script src="{% static 'gymapp/js/bootstrap.bundle.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'estilos/style.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">Crear Persona</h2>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-flex justify-content-between pb-10">
+                            <!-- Botón Crear Persona en la esquina izquierda -->
+                            <button type="submit" class="btn"
+                                style="background-color: #7241b4; color: white; border-color: #7241b4;">
+                                Crear Persona
+                            </button>
+                            <!-- Botón Volver en la esquina derecha -->
+                            <a href="{% url 'personas' %}" class="btn btn-secondary">
+                                Volver
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

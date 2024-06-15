@@ -1,0 +1,49 @@
+
+{% load static %}
+
+{% block head %}
+<link href="{% static 'gymapp/css/bootstrap.min.css' %}" rel="stylesheet">
+<script src="{% static 'gymapp/js/bootstrap.bundle.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'estilos/style.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+    .btn-custom {
+        background-color: #7241b4;
+        border-color: #7241b4;
+    }
+    .btn-custom:hover {
+        background-color: #5e3791;
+        border-color: #5e3791;
+    }
+</style>
+{% endblock %}
+
+{% block contenido %}
+<div class="container px-5 my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <img class="card-img-top" src="{{ persona.foto.url }}" alt="Foto de {{ persona.nombre }}">
+                <div class="card-body">
+                    <h4 class="card-title text-center">{{ persona.nombre }} {{ persona.apellido }}</h4>
+                    <p class="card-text"><strong>RUT: </strong>{{ persona.rut }}</p>
+                    <p class="card-text"><strong>Fecha de Nacimiento: </strong>{{ persona.fnacto }}</p>
+                    <p class="card-text"><strong>E-Mail: </strong>{{ persona.correo }}</p>
+                    <p class="card-text"><strong>Sexo: </strong>{{ persona.get_sexo_display }}</p>
+                    <h5 class="mt-3">Mancuernas:</h5>
+                    <ul>
+                        {% for mancuerna in mancuernas %}
+                        <li>{{ mancuerna.nombre }} ({{ mancuerna.tipo }} kilos)</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'modificar' persona.rut %}" role="button" class="btn btn-custom text-light">Modificar</a>
+                        <a href="{% url 'eliminar' persona.rut %}" role="button" class="btn btn-danger text-light">Eliminar</a>
+                        <a href='{% url "personas" %}' role='button' class="btn btn-secondary">Volver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}
