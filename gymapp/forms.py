@@ -1,5 +1,6 @@
 from django import forms
 from .models import Persona
+from .models import Mancuerna
 
 class PersonaForm(forms.ModelForm):
     rut = forms.CharField(help_text="Ingrese rut sin puntos y con guión")
@@ -16,3 +17,15 @@ class UpdatePersonaForm(forms.ModelForm):
         model = Persona
         fields = ['nombre', 'apellido', 'foto', 'fnacto', 'correo', 'sexo']
 
+class MancuernaForm(forms.ModelForm):
+    class Meta:
+        model = Mancuerna
+        fields = ['peso']
+        widgets = {
+            'peso': forms.Select(choices=[(10, '10 kg'), (20, '20 kg')])
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(MancuernaForm, self).__init__(*args, **kwargs)
+        self.fields['peso'].label = "Peso de la mancuerna"
+        self.fields['peso'].help_text = "Seleccione el peso de la mancuerna"

@@ -12,9 +12,9 @@ TIPO_SEXO = (
     ("O", "OTRO")
 )
 
-TIPO_MANCUERNA = (
-    ("10", "10 kilos"),
-    ("20", "20 kilos"),
+PESO_CHOICES = (
+    (10, "10 kg"),
+    (20, "20 kg"),
 )
 
 class Persona(models.Model):
@@ -30,9 +30,11 @@ class Persona(models.Model):
         return f"{self.rut} -  {self.nombre} {self.apellido}"
 
 class Mancuerna(models.Model):
-    nombre = models.CharField(max_length=50, null=False)
-    tipo = models.CharField(max_length=2, null=False, choices=TIPO_MANCUERNA)
-    propietario = models.ForeignKey(Persona, on_delete=models.PROTECT)
+    id = models.AutoField(primary_key=True)
+    peso = models.IntegerField(choices=PESO_CHOICES, default=10)
+    propietario = models.ForeignKey(Persona, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.nombre} ({self.tipo} kilos)"
+        return f"Mancuerna de {self.peso} kg"
+    
+    

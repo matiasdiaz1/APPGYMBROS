@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Persona, Mancuerna
+from .models import Persona
 from .forms import PersonaForm, UpdatePersonaForm
+from .models import Mancuerna
+from .forms import MancuernaForm
 
 # Create your views here.
 
@@ -59,3 +61,28 @@ def eliminar(request, id):
         "persona": persona
     }
     return render(request, 'gymapp/eliminar.html', datos)
+
+def lista_mancuernas(request):
+    mancuernas = Mancuerna.objects.all()
+    return render(request, 'gymapp/lista_mancuernas.html', {'mancuernas': mancuernas})
+
+def crear_mancuerna(request):
+    if request.method == 'POST':
+        form = MancuernaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_mancuernas')
+    else:
+        form = MancuernaForm()
+    return render(request, 'gymapp/crear_mancuerna.html', {'form': form})
+
+def asignar_mancuerna(request, id):
+    mancuerna = get_object_or_404(Mancuerna, id=id)
+    if request.method == 'POST':
+        persona_id = request.POST.get('persona')
+        persona = get_object_or_404(Persona, rut=persona_id)
+        mancuerna.propietario = persona
+        mancuerna.save()
+        return redirect('lista_mancuernas')
+    personas = Persona.objects.all()
+    return render(request, 'gymapp/asignar_mancuerna.html', {'mancuerna': mancuerna, 'personas': personas})

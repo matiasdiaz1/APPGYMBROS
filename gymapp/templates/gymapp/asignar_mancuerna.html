@@ -1,0 +1,30 @@
+{% extends "gymapp/base.html" %}
+{% load static %}
+
+
+{% block contenido %}
+<h2>Asignar Mancuerna</h2>
+<p>Mancuerna ID: {{ mancuerna.id }} - Peso: {{ mancuerna.peso }} kg</p>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="persona">Seleccionar Persona:</label>
+        <select name="persona" id="persona" class="form-control">
+            <option value="">-- Seleccione una persona --</option>
+            {% for persona in personas %}
+            <option value="{{ persona.rut }}">{{ persona.nombre }} {{ persona.apellido }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Asignar Mancuerna</button>
+</form>
+<a href="{% url 'lista_mancuernas' %}" class="btn btn-secondary mt-3">Volver a la lista</a>
+{% endblock %}
+
+
+
+
+
+</body>
+
+</html>
