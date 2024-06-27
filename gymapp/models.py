@@ -23,6 +23,7 @@ class Persona(models.Model):
     correo = models.EmailField(verbose_name='E-mail')
     sexo = models.CharField(max_length=1, choices=TIPO_SEXO)
     foto = models.ImageField(upload_to='personas', null=True)
+    
 
     def __str__(self):
         return f"{self.rut} -  {self.nombre} {self.apellido}"
