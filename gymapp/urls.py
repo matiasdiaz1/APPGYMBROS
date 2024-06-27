@@ -13,6 +13,7 @@ urlpatterns = [
     path('mancuernas/', lista_mancuernas, name='lista_mancuernas'),
     path('mancuernas/crear/', crear_mancuerna, name='crear_mancuerna'),
     path('mancuernas/asignar/<int:id>/', asignar_mancuerna, name='asignar_mancuerna'),
+    
 ]
 
 if settings.DEBUG:

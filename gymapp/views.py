@@ -3,6 +3,9 @@ from .models import Persona
 from .forms import PersonaForm, UpdatePersonaForm
 from .models import Mancuerna
 from .forms import MancuernaForm
+from django.contrib import messages
+from os import path, remove
+from django.conf import settings
 
 # Create your views here.
 
@@ -53,14 +56,22 @@ def modificar(request, id):
     return render(request, 'gymapp/modificar.html', datos)
 
 def eliminar(request, id):
-    persona = get_object_or_404(Persona, rut=id)
-    if request.method == "POST":
-        persona.delete()
-        return redirect(to="personas")
-    datos = {
-        "persona": persona
+    persona=get_object_or_404(Persona,rut=id)
+
+    datos={
+        "persona":persona
     }
-    return render(request, 'gymapp/eliminar.html', datos)
+
+    if request.method=="POST":
+        if persona.imagen:
+            remove(path.join(str(settings.MEDIA_ROOT).replace('/media','')+persona.imagen.url))
+        persona.delete()
+        messages.error(request, 'Persona Eliminada')
+        return redirect(to='personas')
+
+        
+    return render(request,'gymapp/eliminar.html',datos)
+
 
 def lista_mancuernas(request):
     mancuernas = Mancuerna.objects.all()
