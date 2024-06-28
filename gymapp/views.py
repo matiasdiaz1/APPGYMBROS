@@ -1,15 +1,17 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Persona
-from .forms import PersonaForm, UpdatePersonaForm
+from .forms import PersonaForm, UpdatePersonaForm, CustomUserCreationForm
 from .models import Mancuerna
 from .forms import MancuernaForm
 import os
-
+from django.contrib.auth import authenticate, login
+from .cart import Cart
+from django.views.decorators.http import require_POST
 # Create your views here.
 
 def index(request):
-    return render(request, 'gymapp/index.html')
-
+    mancuernas = Mancuerna.objects.all()[:6]  # Obtén las primeras 6 mancuernas
+    return render(request, 'gymapp/index.html', {'mancuernas': mancuernas})
 
 def personas(request):
     people = Persona.objects.all()  
@@ -92,3 +94,38 @@ def asignar_mancuerna(request, id):
         return redirect('lista_mancuernas')
     personas = Persona.objects.all()
     return render(request, 'gymapp/asignar_mancuerna.html', {'mancuerna': mancuerna, 'personas': personas})
+
+def registro(request):
+    data = {
+        'form' : CustomUserCreationForm()
+    }
+    
+    if request.method == "POST":
+        formulario = CustomUserCreationForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"] )
+            login (request, user)
+            #messages.success(request, "Registro exitoso")
+            return redirect(to="index")
+        data["form"] = formulario
+    
+    return render(request, 'registration/registro.html', data )
+
+@require_POST
+def cart_add(request, mancuerna_id):
+    cart = Cart(request)
+    mancuerna = get_object_or_404(Mancuerna, id=mancuerna_id)
+    quantity = int(request.POST.get('quantity'))
+    cart.add(mancuerna=mancuerna, quantity=quantity, update_quantity=True)
+    return redirect('cart_detail')
+
+def cart_remove(request, mancuerna_id):
+    cart = Cart(request)
+    mancuerna = get_object_or_404(Mancuerna, id=mancuerna_id)
+    cart.remove(mancuerna)
+    return redirect('cart_detail')
+
+def cart_detail(request):
+    cart = Cart(request)
+    return render(request, 'gymapp/cart_detail.html', {'cart': cart})

@@ -1,23 +1,36 @@
-
+{% extends "gymapp/base.html" %}
 {% load static %}
 
 {% block contenido %}
-<div class="container">
-    <div class="mt-4 p-5 bg-primary text-white rounded">
-        <h1>Crud con Django</h1>
-        <p>Con mancuernas de 10 y 20 kilos...</p>
+
+    <div class="container">
+        <!-- El código del carrusel se mantiene igual -->
+
+        <main class="main-content">
+            <div class="col-lg">
+                <div class="mt-1 p-2 bg-light text-dark rounded text-center">
+                    <h1 class="display-1">Mejores productos</h1>
+                </div>
+            </div>
+
+            <div class="flex-box">
+                {% for mancuerna in mancuernas %}
+                    <div class="card">
+                        <img src="{% static 'gymapp/img/nuevas-mancu.jpg' %}" alt="m">
+                        <p class='title'>Mancuernas {{ mancuerna.peso }} kg.</p>
+                        <p>Precio: ${{ mancuerna.precio }}</p>
+                        {% if user.is_authenticated %}
+                            <form action="{% url 'cart_add' mancuerna.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="comprar-estilo">Agregar al carrito</button>
+                            </form>
+                        {% else %}
+                            <a class="comprar-estilo" href="{% url 'login' %}?next={{ request.path }}">Iniciar sesión para comprar</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </main>
     </div>
-    <div class="border rounded mt-3 p-2">
-        <h3>Traer datos a la página</h3>
-        <p>{{fecha}}</p>
-        <p>{{msg}}</p>
-        <h5>Lista de Objetos</h5>
-        <ul>
-            {% for i in lista %}
-                <li>{{i}}</li>
-            {% endfor %}
-        </ul>
-        <p>Cantidad de elementos: {{items}}</p>
-    </div>
-</div>
 {% endblock contenido %}

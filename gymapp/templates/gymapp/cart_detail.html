@@ -1,0 +1,37 @@
+{% extends "gymapp/base.html" %}
+{% load static %}
+
+{% block contenido %}
+    <h2>Tu carrito de compras</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mancuerna</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Precio total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                <tr>
+                    <td>{{ item.mancuerna.peso }} kg</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>${{ item.total_price }}</td>
+                    <td>
+                        <a href="{% url 'cart_remove' item.mancuerna.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3"><strong>Total</strong></td>
+                <td><strong>${{ cart.get_total_price }}</strong></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{% url 'lista_mancuernas' %}" class="btn btn-primary">Seguir comprando</a>
+    <a href="#" class="btn btn-success">Proceder al pago</a>
+{% endblock %}

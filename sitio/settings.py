@@ -138,3 +138,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL='media/'
 import os
 MEDIA_ROOT=os.path.join(BASE_DIR,'gymapp/media')
+
+
+CART_SESSION_ID = 'cart'
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
