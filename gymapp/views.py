@@ -1,13 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Persona
-from .forms import PersonaForm, UpdatePersonaForm, CustomUserCreationForm
-from .models import Mancuerna
-from .forms import MancuernaForm
-import os
+from .models import Persona, Mancuerna
+from .forms import CustomUserCreationForm, PersonaForm, UpdatePersonaForm, MancuernaForm
 from django.contrib.auth import authenticate, login
-from .cart import Cart
 from django.views.decorators.http import require_POST
-# Create your views here.
+from .cart import Cart
+import os
 
 def index(request):
     mancuernas = Mancuerna.objects.all()[:6]  
@@ -58,11 +55,9 @@ def modificar(request, id):
 def eliminar(request, id):
     persona = get_object_or_404(Persona, rut=id)
     if request.method == "POST":
-
         if persona.foto:
             if os.path.isfile(persona.foto.path):
                 os.remove(persona.foto.path)
-
         persona.delete()
         return redirect(to="personas")
     datos = {
@@ -106,7 +101,6 @@ def registro(request):
             formulario.save()
             user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"] )
             login (request, user)
-            #messages.success(request, "Registro exitoso")
             return redirect(to="index")
         data["form"] = formulario
     

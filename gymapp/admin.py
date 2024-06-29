@@ -6,7 +6,7 @@ class AdmPersona(admin.ModelAdmin):
     list_filter = ['sexo']
 
 class AdmMancuerna(admin.ModelAdmin):
-    list_display = ['id', 'peso', 'propietario']
+    list_display = ['id', 'peso', 'precio', 'propietario']
     list_filter = ['peso']
     search_fields = ['propietario__nombre', 'propietario__apellido']
 

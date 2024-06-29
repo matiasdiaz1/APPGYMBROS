@@ -23,7 +23,7 @@ class MancuernaForm(forms.ModelForm):
         model = Mancuerna
         fields = ['peso', 'precio', 'propietario']
         widgets = {
-            'peso': forms.NumberInput(attrs={'step': '0.1'}),
+            'peso': forms.NumberInput(attrs={'step': '1'}),  # Ajustado para enteros
             'precio': forms.NumberInput(attrs={'step': '0.01'}),
         }
 
@@ -31,7 +31,7 @@ class MancuernaForm(forms.ModelForm):
         super(MancuernaForm, self).__init__(*args, **kwargs)
         self.fields['peso'].label = "Peso de la mancuerna"
         self.fields['peso'].help_text = "Seleccione el peso de la mancuerna"
-        
+
 
 class CustomUserCreationForm(UserCreationForm):
     pass

@@ -30,12 +30,9 @@ class Persona(models.Model):
 
 class Mancuerna(models.Model):
     id = models.AutoField(primary_key=True)
-    peso = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0.1)])
-    precio = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
+    peso = models.IntegerField(validators=[MinValueValidator(1)])  
+    precio = models.IntegerField(validators=[MinValueValidator(1)]) 
     propietario = models.ForeignKey(Persona, on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return f"Mancuerna de {self.peso} kg"
 
     def __str__(self):
         return f"Mancuerna de {self.peso} kg - ${self.precio}"
