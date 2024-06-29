@@ -21,9 +21,10 @@ class UpdatePersonaForm(forms.ModelForm):
 class MancuernaForm(forms.ModelForm):
     class Meta:
         model = Mancuerna
-        fields = ['peso']
+        fields = ['peso', 'precio', 'propietario']
         widgets = {
-            'peso': forms.Select(choices=[(10, '10 kg'), (20, '20 kg')])
+            'peso': forms.NumberInput(attrs={'step': '0.1'}),
+            'precio': forms.NumberInput(attrs={'step': '0.01'}),
         }
 
     def __init__(self, *args, **kwargs):
