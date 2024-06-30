@@ -45,3 +45,10 @@ class DireccionForm(forms.Form):
     comuna = forms.ChoiceField(label='Comuna', choices=[('Comuna 1', 'Comuna 1'), ('Comuna 2', 'Comuna 2')])  # Añade tus comunas
     instrucciones = forms.CharField(label='Instrucciones de entrega', widget=forms.Textarea, required=False)
     nombre_direccion = forms.CharField(label='Nombre de la dirección', max_length=100)
+    
+class PagoForm(forms.Form):
+    numero_tarjeta = forms.CharField(max_length=16, label='Número de tarjeta', widget=forms.TextInput(attrs={'placeholder': 'Número de tarjeta'}))
+    mes_vencimiento = forms.ChoiceField(choices=[(str(i).zfill(2), str(i).zfill(2)) for i in range(1, 13)], label='Mes de vencimiento')
+    ano_vencimiento = forms.ChoiceField(choices=[(str(i), str(i)) for i in range(2024, 2035)], label='Año de vencimiento')
+    cvv = forms.CharField(max_length=3, label='CVV', widget=forms.TextInput(attrs={'placeholder': 'CVV'}))
+    rut_dueno_tarjeta = forms.CharField(max_length=12, label='RUT dueño de tarjeta', widget=forms.TextInput(attrs={'placeholder': 'RUT dueño de tarjeta'}))

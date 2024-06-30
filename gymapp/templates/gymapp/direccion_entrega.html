@@ -10,7 +10,7 @@
                     <h2 class="text-center mb-0">Entrega</h2>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{% url 'index' %}" class="row g-3">
+                    <form method="post" action="{% url 'pago' %}" class="row g-3">
                         {% csrf_token %}
                         <div class="col-md-12">
                             <label for="direccion" class="form-label">Dirección*</label>

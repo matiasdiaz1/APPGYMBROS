@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Persona, Mancuerna
-from .forms import CustomUserCreationForm, PersonaForm, UpdatePersonaForm, MancuernaForm , DireccionForm
+from .forms import PagoForm, CustomUserCreationForm, PersonaForm, UpdatePersonaForm, MancuernaForm , DireccionForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.http import require_POST
 from .cart import Cart
@@ -134,3 +134,13 @@ def direccion_entrega(request):
     else:
         form = DireccionForm()
     return render(request, 'gymapp/direccion_entrega.html', {'form': form})
+
+def pago(request):
+    if request.method == 'POST':
+        form = PagoForm(request.POST)
+        if form.is_valid():
+            # Aquí podrías manejar el proceso de pago
+            return redirect('confirmacion')  # Redirige a la página de confirmación
+    else:
+        form = PagoForm()
+    return render(request, 'gymapp/pago.html', {'form': form})
