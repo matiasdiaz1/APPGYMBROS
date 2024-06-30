@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Persona, Mancuerna
-from .forms import CustomUserCreationForm, PersonaForm, UpdatePersonaForm, MancuernaForm
+from .forms import CustomUserCreationForm, PersonaForm, UpdatePersonaForm, MancuernaForm , DireccionForm
 from django.contrib.auth import authenticate, login
 from django.views.decorators.http import require_POST
 from .cart import Cart
@@ -123,3 +123,14 @@ def cart_remove(request, mancuerna_id):
 def cart_detail(request):
     cart = Cart(request)
     return render(request, 'gymapp/cart_detail.html', {'cart': cart})
+
+
+def direccion_entrega(request):
+    if request.method == "POST":
+        form = DireccionForm(request.POST)
+        if form.is_valid():
+            # Aquí puedes guardar la dirección o procesarla como necesites
+            return redirect('pago')  # Redirige a la página de pago u otra vista
+    else:
+        form = DireccionForm()
+    return render(request, 'gymapp/direccion_entrega.html', {'form': form})

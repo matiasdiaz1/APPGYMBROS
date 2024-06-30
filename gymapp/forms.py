@@ -35,3 +35,13 @@ class MancuernaForm(forms.ModelForm):
 
 class CustomUserCreationForm(UserCreationForm):
     pass
+
+class DireccionForm(forms.Form):
+    direccion = forms.CharField(label='Dirección', max_length=100)
+    numero = forms.CharField(label='Número', max_length=10)
+    depto = forms.CharField(label='Depto/Casa/Oficina', max_length=50, required=False)
+    celular = forms.CharField(label='Celular', max_length=15)
+    region = forms.ChoiceField(label='Región', choices=[('Region 1', 'Region 1'), ('Region 2', 'Region 2')])  # Añade tus regiones
+    comuna = forms.ChoiceField(label='Comuna', choices=[('Comuna 1', 'Comuna 1'), ('Comuna 2', 'Comuna 2')])  # Añade tus comunas
+    instrucciones = forms.CharField(label='Instrucciones de entrega', widget=forms.Textarea, required=False)
+    nombre_direccion = forms.CharField(label='Nombre de la dirección', max_length=100)
