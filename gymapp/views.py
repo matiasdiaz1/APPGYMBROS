@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.views.decorators.http import require_POST
 from .cart import Cart
 import os
+from django.contrib import messages
 
 def index(request):
     mancuernas = Mancuerna.objects.all()[:6]  
@@ -23,6 +24,7 @@ def crearpersona(request):
         form = PersonaForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, 'La persona ha sido agregada exitosamente.')
             return redirect(to="personas")
     datos = {
         "form": form
@@ -45,6 +47,7 @@ def modificar(request, id):
         form = UpdatePersonaForm(data=request.POST, files=request.FILES, instance=persona)
         if form.is_valid():
             form.save()
+            messages.success(request, 'La persona ha sido modificada exitosamente.')
             return redirect(to="personas")
     datos = {
         "form": form,
@@ -59,6 +62,7 @@ def eliminar(request, id):
             if os.path.isfile(persona.foto.path):
                 os.remove(persona.foto.path)
         persona.delete()
+        messages.success(request, 'La persona ha sido eliminada exitosamente.')
         return redirect(to="personas")
     datos = {
         "persona": persona
