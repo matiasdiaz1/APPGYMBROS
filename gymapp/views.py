@@ -47,7 +47,7 @@ def modificar(request, id):
         form = UpdatePersonaForm(data=request.POST, files=request.FILES, instance=persona)
         if form.is_valid():
             form.save()
-            messages.success(request, 'La persona ha sido modificada exitosamente.')
+            messages.warning(request, 'La persona ha sido modificada exitosamente.')
             return redirect(to="personas")
     datos = {
         "form": form,
@@ -62,7 +62,7 @@ def eliminar(request, id):
             if os.path.isfile(persona.foto.path):
                 os.remove(persona.foto.path)
         persona.delete()
-        messages.success(request, 'La persona ha sido eliminada exitosamente.')
+        messages.error(request, 'La persona ha sido eliminada exitosamente.')
         return redirect(to="personas")
     datos = {
         "persona": persona

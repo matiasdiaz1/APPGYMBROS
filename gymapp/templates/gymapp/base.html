@@ -69,22 +69,44 @@
     </nav>
     
 
-    <script>
-        function displayAlert(title, text, icon) {
-            Swal.fire({
-                title: title,
-                text: text,
-                icon: icon,
-                confirmButtonText: 'Aceptar'
-            });
-        }
+    {% if messages %} 
 
-        {% if messages %}
-            {% for message in messages %}
-                displayAlert('Mensaje', '{{ message }}', 'success');
-            {% endfor %}
+        {% for message in messages %}
+            {% if message.level == 25 %}
+                <script>
+                    Swal.fire({
+                        title: 'Operación exitosa!',
+                        text: '{{message}}',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    })
+                </script>
+            {% endif %}
+            {% if message.level == 30 %}
+
+                <script>
+                    Swal.fire({
+                        title: 'Alerta!',
+                        text: '{{message}}',
+                        icon: 'warning',
+                        confirmButtonText: 'Ok'
+                    })
+                </script>
+            {% endif %}
+            {% if message.level == 40 %}
+
+            <script>
+                Swal.fire({
+                    title: 'Importante!',
+                    text: '{{message}}',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
         {% endif %}
-    </script>
+        {% endfor %}
+
+{% endif %}
 
     {% block contenido %}
 
