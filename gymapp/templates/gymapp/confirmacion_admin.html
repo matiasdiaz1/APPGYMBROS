@@ -23,6 +23,7 @@
                                                 <th scope="col">Cantidad</th>
                                                 <th scope="col">Precio unitario</th>
                                                 <th scope="col">Precio total</th>
+                                                <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -32,10 +33,16 @@
                                                 <td>{{ item.quantity }}</td>
                                                 <td>${{ item.price }}</td>
                                                 <td>${{ item.total_price }}</td>
+                                                <td>
+                                                    <form action="{% url 'remove_from_cart' item.id %}" method="post">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                             {% endfor %}
                                             <tr>
-                                                <td colspan="3" class="text-end"><strong>Total</strong></td>
+                                                <td colspan="4" class="text-end"><strong>Total</strong></td>
                                                 <td><strong>${{ cart.get_total_price }}</strong></td>
                                             </tr>
                                         </tbody>
@@ -49,32 +56,16 @@
                                 <h4 class="mb-0">Estado de Envío</h4>
                             </div>
                             <div class="card-body">
-                                <div class="d-flex justify-content-around">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="estadoEnvio" id="preparacion" value="1">
-                                        <label class="form-check-label" for="preparacion">
-                                            <i class="fas fa-box-open"></i> En preparación
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="estadoEnvio" id="cancelado" value="2">
-                                        <label class="form-check-label" for="cancelado">
-                                            <i class="fas fa-times-circle"></i> Cancelado
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="estadoEnvio" id="devuelto" value="3">
-                                        <label class="form-check-label" for="devuelto">
-                                            <i class="fas fa-undo"></i> Devuelto
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="estadoEnvio" id="entregado" value="4">
-                                        <label class="form-check-label" for="entregado">
-                                            <i class="fas fa-check-circle"></i> Entregado
-                                        </label>
-                                    </div>
-                                </div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <select class="form-select" name="estado_envio" aria-label="Estado de Envío">
+                                        <option value="" selected>Selecciona el estado</option>
+                                        <option value="preparacion">En preparación</option>
+                                        <option value="cancelado">Cancelado</option>
+                                        <option value="devuelto">Devuelto</option>
+                                        <option value="entregado">Entregado</option>
+                                    </select>
+                                </form>
                             </div>
                         </div>
 
@@ -98,7 +89,7 @@
         </div>
     </div>
 
-
+    <!-- Modal -->
     <div class="modal fade" id="detalleEntregaModal" tabindex="-1" aria-labelledby="detalleEntregaModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
