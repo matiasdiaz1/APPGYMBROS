@@ -166,3 +166,18 @@ def confirmacion(request):
 
 def monedas(request):
     return render(request, 'gymapp/monedas.html')
+
+
+@login_required
+def confirmacion_admin(request):
+    cart = Cart(request)
+    direccion = request.session.get('direccion', {})
+    usuario = request.user  
+    return render(request, 'gymapp/confirmacion_admin.html', {'cart': cart, 'direccion': direccion, 'usuario': usuario})
+
+@login_required
+def clear_cart(request):
+    cart = Cart(request)
+    cart.clear()
+    messages.info(request, 'El carrito ha sido vaciado exitosamente.')
+    return redirect('cart_detail')

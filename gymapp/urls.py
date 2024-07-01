@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import confirmacion, direccion_entrega, index, monedas, pago, personas, detallepersona, crearpersona, modificar, \
+from .views import confirmacion, confirmacion_admin, direccion_entrega, index, monedas, pago, personas, detallepersona, crearpersona, modificar, \
 eliminar, asignar_mancuerna, crear_mancuerna, lista_mancuernas, registro, cart_detail, cart_add, cart_remove
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import clear_cart
 
 urlpatterns = [
     path('', index, name='index'),
@@ -22,6 +23,8 @@ urlpatterns = [
     path('pago/', pago, name='pago'),
     path('monedas/', monedas, name='monedas'),
     path('confirmacion/', confirmacion, name='confirmacion'),
+    path('confirmacionadmin/', confirmacion_admin, name='confirmacion_admin'),
+    path('clear-cart/', clear_cart, name='clear_cart'),
 ]
 
 
