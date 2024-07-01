@@ -1,56 +1,13 @@
+
 {% extends "gymapp/base.html" %}
 {% load static %}
-
 {% block contenido %}
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-            <div class="card">
-                <div class="card-header bg-dark text-white">
-                    <h2 class="text-center mb-0">Entrega</h2>
-                </div>
-                <div class="card-body">
-                    <form method="post" action="{% url 'pago' %}" class="row g-3">
-                        {% csrf_token %}
-                        <div class="col-md-12">
-                            <label for="direccion" class="form-label">Dirección*</label>
-                            {{ form.direccion }}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="numero" class="form-label">Número*</label>
-                            {{ form.numero }}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="depto" class="form-label">Depto/Casa/Oficina</label>
-                            {{ form.depto }}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="celular" class="form-label">Celular*</label>
-                            {{ form.celular }}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="region" class="form-label">Seleccione una región</label>
-                            {{ form.region }}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="comuna" class="form-label">Seleccione una comuna</label>
-                            {{ form.comuna }}
-                        </div>
-                        <div class="col-md-12">
-                            <label for="instrucciones" class="form-label">Instrucciones de entrega</label>
-                            {{ form.instrucciones }}
-                        </div>
-                        <div class="col-md-12">
-                            <label for="nombre_direccion" class="form-label">Nombre de la dirección*</label>
-                            {{ form.nombre_direccion }}
-                        </div>
-                        <div class="col-md-12 text-center mt-3">
-                            <button type="submit" class="btn btn-dark btn-lg w-100">Pagar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h2 class="text-center mb-4">Dirección de Entrega</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Continuar a Pago</button>
+    </form>
 </div>
 {% endblock %}

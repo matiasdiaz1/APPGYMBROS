@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import direccion_entrega, index, monedas, pago, personas, detallepersona, crearpersona, modificar, \
+from .views import confirmacion, direccion_entrega, index, monedas, pago, personas, detallepersona, crearpersona, modificar, \
 eliminar, asignar_mancuerna, crear_mancuerna, lista_mancuernas, registro, cart_detail, cart_add, cart_remove
 from django.conf import settings
 from django.conf.urls.static import static
@@ -21,6 +21,7 @@ urlpatterns = [
     path('direccion/', direccion_entrega, name='direccion_entrega'),
     path('pago/', pago, name='pago'),
     path('monedas/', monedas, name='monedas'),
+    path('confirmacion/', confirmacion, name='confirmacion'),
 ]
 
 

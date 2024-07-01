@@ -1,0 +1,42 @@
+{% extends "gymapp/base.html" %}
+{% load static %}
+{% block contenido %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">Confirmación de Pedido</h2>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Mancuerna</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio unitario</th>
+                    <th scope="col">Precio total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.mancuerna.peso }} kg</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>${{ item.total_price }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3"><strong>Total</strong></td>
+                    <td><strong>${{ cart.get_total_price }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3 class="mt-4">Dirección de Entrega</h3>
+    <p><strong>Dirección:</strong> {{ direccion.direccion }}</p>
+    <p><strong>Número:</strong> {{ direccion.numero }}</p>
+    <p><strong>Depto/Casa/Oficina:</strong> {{ direccion.depto }}</p>
+    <p><strong>Celular:</strong> {{ direccion.celular }}</p>
+    <p><strong>Región:</strong> {{ direccion.region }}</p>
+    <p><strong>Comuna:</strong> {{ direccion.comuna }}</p>
+    <p><strong>Instrucciones de entrega:</strong> {{ direccion.instrucciones }}</p>
+    <p><strong>Nombre de la dirección:</strong> {{ direccion.nombre_direccion }}</p>
+</div>
+{% endblock %}

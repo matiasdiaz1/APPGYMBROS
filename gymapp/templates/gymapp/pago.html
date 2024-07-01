@@ -1,44 +1,13 @@
+
 {% extends "gymapp/base.html" %}
 {% load static %}
-
 {% block contenido %}
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-            <div class="card">
-                <div class="card-header bg-dark text-white">
-                    <h2 class="text-center mb-0">Paga con cualquier tarjeta</h2>
-                </div>
-                <div class="card-body">
-                    <form method="post" action="{% url 'index' %}" class="row g-3">
-                        {% csrf_token %}
-                        <div class="col-md-12">
-                            <label for="numero_tarjeta" class="form-label">Número de tarjeta</label>
-                            {{ form.numero_tarjeta }}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="mes_vencimiento" class="form-label">Mes de vencimiento</label>
-                            {{ form.mes_vencimiento }}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="ano_vencimiento" class="form-label">Año de vencimiento</label>
-                            {{ form.ano_vencimiento }}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="cvv" class="form-label">CVV</label>
-                            {{ form.cvv }}
-                        </div>
-                        <div class="col-md-12">
-                            <label for="rut_dueno_tarjeta" class="form-label">RUT dueño de tarjeta</label>
-                            {{ form.rut_dueno_tarjeta }}
-                        </div>
-                        <div class="col-md-12 text-center mt-3">
-                            <button type="submit" class="btn btn-dark btn-lg w-100">Pagar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h2 class="text-center mb-4">Pago</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Realizar Pago</button>
+    </form>
 </div>
 {% endblock %}
