@@ -125,10 +125,15 @@ def registro(request):
 def cart_add(request, mancuerna_id):
     cart = Cart(request)
     mancuerna = get_object_or_404(Mancuerna, id=mancuerna_id)
-    quantity = int(request.POST.get('quantity'))
+    quantity = int(request.POST.get('quantity', 1))
+    
+    # Verifica si hay suficiente stock
+    if quantity > mancuerna.stock:
+        messages.error(request, f"Lo sentimos, solo hay {mancuerna.stock} unidades disponibles.")
+        return redirect('cart_detail')
+    
     cart.add(mancuerna=mancuerna, quantity=quantity, update_quantity=True)
     return redirect('cart_detail')
-
 @login_required
 def cart_remove(request, mancuerna_id):
     cart = Cart(request)
@@ -181,11 +186,26 @@ def monedas(request):
 
 
 @login_required
-def confirmacion_admin(request):
+def confirmacion(request):
     cart = Cart(request)
     direccion = request.session.get('direccion', {})
-    usuario = request.user  
-    return render(request, 'gymapp/confirmacion_admin.html', {'cart': cart, 'direccion': direccion, 'usuario': usuario})
+    usuario = request.user
+
+
+    for item in cart:
+        mancuerna = item['mancuerna']
+        if mancuerna.stock < item['quantity']:
+            messages.error(request, f"Lo sentimos, no hay suficiente stock para {mancuerna}.")
+            return redirect('cart_detail')
+        mancuerna.stock -= item['quantity']
+        mancuerna.save()
+
+
+    cart.clear()
+    
+    return render(request, 'gymapp/confirmacion.html', {'cart': cart, 'direccion': direccion, 'usuario': usuario})
+
+
 
 @login_required
 def clear_cart(request):
@@ -193,3 +213,10 @@ def clear_cart(request):
     cart.clear()
     messages.info(request, 'El carrito ha sido vaciado exitosamente.')
     return redirect('cart_detail')
+
+
+
+@login_required
+def confirmacion_admin(request):
+
+    return render(request, 'gymapp/confirmacion_admin.html')

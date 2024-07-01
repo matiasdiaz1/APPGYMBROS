@@ -14,6 +14,7 @@
                             <th>Cantidad</th>
                             <th>Precio unitario</th>
                             <th>Precio total</th>
+                            <th>Stock disponible</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -24,11 +25,16 @@
                                 <td>
                                     <form action="{% url 'cart_add' item.mancuerna.id %}" method="post">
                                         {% csrf_token %}
-                                        <input type="number" name="quantity" id="quantity-{{ forloop.counter0 }}" class="form-control form-control-sm d-inline-block w-auto" data-unit-price="{{ item.price }}" value="{{ item.quantity }}" min="1" onchange="this.form.submit()">
+                                        <input type="number" name="quantity" id="quantity-{{ forloop.counter0 }}" 
+                                            class="form-control form-control-sm d-inline-block w-auto" 
+                                            data-unit-price="{{ item.price }}" value="{{ item.quantity }}" 
+                                            min="1" max="{{ item.mancuerna.stock }}" 
+                                            onchange="this.form.submit()">
                                     </form>
                                 </td>
                                 <td>${{ item.price }}</td>
                                 <td id="total-price-{{ forloop.counter0 }}">${{ item.total_price }}</td>
+                                <td>{{ item.mancuerna.stock }}</td>
                                 <td>
                                     <form action="{% url 'cart_remove' item.mancuerna.id %}" method="post">
                                         {% csrf_token %}
@@ -36,10 +42,15 @@
                                     </form>
                                 </td>
                             </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center">No hay productos en tu carrito.</td>
+                            </tr>
                         {% endfor %}
                         <tr>
                             <td colspan="3"><strong>Total</strong></td>
                             <td><strong id="cart-total">${{ cart.get_total_price }}</strong></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -47,14 +58,14 @@
             </div>
             <div class="d-flex justify-content-between mt-4">
                 <a href="{% url 'index' %}" class="btn btn-primary" style="background-color: #7241b4; color: white; border-color: #7241b4;">Seguir comprando</a>
-                <a href="{% url 'direccion_entrega' %}" class="btn btn-dark">Continuar</a>
+                <a id="continuar-btn" href="{% url 'direccion_entrega' %}" class="btn btn-dark {% if cart|length == 0 %}disabled{% endif %}">Continuar</a>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function updatePrice(index) {
+    function updateItemTotal(index) {
         let quantityInput = document.getElementById('quantity-' + index);
         let unitPrice = parseFloat(quantityInput.getAttribute('data-unit-price'));
         let quantity = parseInt(quantityInput.value);
@@ -63,6 +74,7 @@
         totalPriceElement.innerText = '$' + newTotalPrice.toFixed(2);
 
         updateCartTotal();
+        updateContinuarButton();
     }
 
     function updateCartTotal() {
@@ -74,5 +86,22 @@
         let cartTotalElement = document.getElementById('cart-total');
         cartTotalElement.innerText = '$' + total.toFixed(2);
     }
+
+    function updateContinuarButton() {
+        let cartLength = {{ cart|length }};
+        let continuarBtn = document.getElementById('continuar-btn');
+        
+        if (cartLength > 0) {
+            continuarBtn.classList.remove('disabled');
+            continuarBtn.removeAttribute('disabled');
+        } else {
+            continuarBtn.classList.add('disabled');
+            continuarBtn.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateContinuarButton();
+    });
 </script>
 {% endblock %}

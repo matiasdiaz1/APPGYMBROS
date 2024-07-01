@@ -21,16 +21,19 @@ class UpdatePersonaForm(forms.ModelForm):
 class MancuernaForm(forms.ModelForm):
     class Meta:
         model = Mancuerna
-        fields = ['peso', 'precio', 'propietario']
+        fields = ['peso', 'precio', 'stock', 'propietario']
         widgets = {
             'peso': forms.NumberInput(attrs={'step': '1'}),  
             'precio': forms.NumberInput(attrs={'step': '0.01'}),
+            'stock': forms.NumberInput(attrs={'min': '0'}),
         }
 
     def __init__(self, *args, **kwargs):
         super(MancuernaForm, self).__init__(*args, **kwargs)
         self.fields['peso'].label = "Peso de la mancuerna"
         self.fields['peso'].help_text = "Seleccione el peso de la mancuerna"
+        self.fields['stock'].label = "Stock disponible"
+        self.fields['stock'].help_text = "Ingrese la cantidad disponible"
 
 
 class CustomUserCreationForm(UserCreationForm):

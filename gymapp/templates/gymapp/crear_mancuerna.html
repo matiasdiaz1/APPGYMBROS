@@ -12,7 +12,11 @@
                         <form method="post">
                             {% csrf_token %}
                             {{ form|crispy }}
-                            <button type="submit" class="btn " style="background-color: #7241b4; color: white; border-color: #7241b4;">Guardar</button>
+                            <div class="form-group">
+                                <label for="id_stock">Stock:</label>
+                                <input type="number" name="stock" class="form-control" id="id_stock" min="0" required>
+                            </div>
+                            <button type="submit" class="btn mt-3" style="background-color: #7241b4; color: white; border-color: #7241b4;">Guardar</button>
                         </form>
                     </div>
                 </div>

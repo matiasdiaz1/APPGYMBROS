@@ -32,7 +32,8 @@ class Mancuerna(models.Model):
     id = models.AutoField(primary_key=True)
     peso = models.IntegerField(validators=[MinValueValidator(1)])  
     precio = models.IntegerField(validators=[MinValueValidator(1)]) 
+    stock = models.PositiveIntegerField(default=0)  
     propietario = models.ForeignKey(Persona, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return f"Mancuerna de {self.peso} kg - ${self.precio}"
+        return f"Mancuerna de {self.peso} kg - ${self.precio} (Stock: {self.stock})"
