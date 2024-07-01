@@ -13,6 +13,7 @@ def index(request):
     mancuernas = Mancuerna.objects.all()[:6]  
     return render(request, 'gymapp/index.html', {'mancuernas': mancuernas})
 
+@login_required
 def personas(request):
     people = Persona.objects.all()  
     datos = {
@@ -20,6 +21,7 @@ def personas(request):
     }
     return render(request, 'gymapp/personas.html', datos)
 
+@login_required
 def crearpersona(request):
     form = PersonaForm()
     if request.method == "POST":
@@ -33,6 +35,7 @@ def crearpersona(request):
     }
     return render(request, 'gymapp/crearpersona.html', datos)
 
+@login_required
 def detallepersona(request, id):
     persona = get_object_or_404(Persona, rut=id)
     mancuernas = Mancuerna.objects.filter(propietario=persona)  
@@ -42,6 +45,7 @@ def detallepersona(request, id):
     }
     return render(request, 'gymapp/detallepersona.html', datos)
 
+@login_required
 def modificar(request, id):
     persona = get_object_or_404(Persona, rut=id)
     form = UpdatePersonaForm(instance=persona)
@@ -57,6 +61,7 @@ def modificar(request, id):
     }
     return render(request, 'gymapp/modificar.html', datos)
 
+@login_required
 def eliminar(request, id):
     persona = get_object_or_404(Persona, rut=id)
     if request.method == "POST":
@@ -71,10 +76,12 @@ def eliminar(request, id):
     }
     return render(request, 'gymapp/eliminar.html', datos)
 
+@login_required
 def lista_mancuernas(request):
     mancuernas = Mancuerna.objects.all()
     return render(request, 'gymapp/lista_mancuernas.html', {'mancuernas': mancuernas})
 
+@login_required
 def crear_mancuerna(request):
     if request.method == 'POST':
         form = MancuernaForm(request.POST)
@@ -85,6 +92,7 @@ def crear_mancuerna(request):
         form = MancuernaForm()
     return render(request, 'gymapp/crear_mancuerna.html', {'form': form})
 
+@login_required
 def asignar_mancuerna(request, id):
     mancuerna = get_object_or_404(Mancuerna, id=id)
     if request.method == 'POST':
@@ -95,6 +103,7 @@ def asignar_mancuerna(request, id):
         return redirect('lista_mancuernas')
     personas = Persona.objects.all()
     return render(request, 'gymapp/asignar_mancuerna.html', {'mancuerna': mancuerna, 'personas': personas})
+
 
 def registro(request):
     data = {
@@ -120,12 +129,14 @@ def cart_add(request, mancuerna_id):
     cart.add(mancuerna=mancuerna, quantity=quantity, update_quantity=True)
     return redirect('cart_detail')
 
+@login_required
 def cart_remove(request, mancuerna_id):
     cart = Cart(request)
     mancuerna = get_object_or_404(Mancuerna, id=mancuerna_id)
     cart.remove(mancuerna)
     return redirect('cart_detail')
 
+@login_required
 def cart_detail(request):
     cart = Cart(request)
     return render(request, 'gymapp/cart_detail.html', {'cart': cart})
@@ -164,6 +175,7 @@ def confirmacion(request):
     usuario = request.user  
     return render(request, 'gymapp/confirmacion.html', {'cart': cart, 'direccion': direccion, 'usuario': usuario})
 
+@login_required
 def monedas(request):
     return render(request, 'gymapp/monedas.html')
 
