@@ -16,11 +16,11 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark custom-navbar">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{% url 'index' %}" >
                 <img src="{% static "gymapp/img/logo.jfif" %}" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
             </a>
     
-            <a class="navbar-brand" href="#">GymBros</a>
+            <a class="navbar-brand" href="{% url 'index' %}" >GymBros</a>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -29,20 +29,17 @@
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Todos los Productos</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#">Mis pedidos</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Administración</a>
                         <div class="dropdown-menu custom-navbar shadow" aria-labelledby="dropdownId">
-                            <a class="dropdown-item drophovercustom" href="#">Agregar productos</a>
-                            <a class="dropdown-item drophovercustom" href="#">Modificar productos</a>
-                            <a class="dropdown-item drophovercustom" href="#">Pedidos</a>
-                            <a class="dropdown-item drophovercustom" href="#">Clientes</a>
-                            <a class="dropdown-item drophovercustom" href="#">API</a>
+                            <a class="dropdown-item drophovercustom" href="{% url 'personas' %}" >Personas</a>
+                            <a class="dropdown-item drophovercustom" href="{% url 'crearpersona' %}" >Crear personas</a>
+                            <a class="dropdown-item drophovercustom" href="{% url 'lista_mancuernas' %}" >Mancuernas</a>
+                            <a class="dropdown-item drophovercustom" href="{% url 'crear_mancuerna' %}" >Crear mancuerna</a>
+                            <a class="dropdown-item drophovercustom" href="{% url 'monedas' %}">API</a>
                         </div>
                     </li>
                     <li class="nav-item">

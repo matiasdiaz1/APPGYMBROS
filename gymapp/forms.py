@@ -23,7 +23,7 @@ class MancuernaForm(forms.ModelForm):
         model = Mancuerna
         fields = ['peso', 'precio', 'propietario']
         widgets = {
-            'peso': forms.NumberInput(attrs={'step': '1'}),  # Ajustado para enteros
+            'peso': forms.NumberInput(attrs={'step': '1'}),  
             'precio': forms.NumberInput(attrs={'step': '0.01'}),
         }
 

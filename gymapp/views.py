@@ -129,8 +129,7 @@ def direccion_entrega(request):
     if request.method == "POST":
         form = DireccionForm(request.POST)
         if form.is_valid():
-            # Aquí puedes guardar la dirección o procesarla como necesites
-            return redirect('pago')  # Redirige a la página de pago u otra vista
+            return redirect('pago')  
     else:
         form = DireccionForm()
     return render(request, 'gymapp/direccion_entrega.html', {'form': form})
@@ -139,8 +138,12 @@ def pago(request):
     if request.method == 'POST':
         form = PagoForm(request.POST)
         if form.is_valid():
-            # Aquí podrías manejar el proceso de pago
-            return redirect('confirmacion')  # Redirige a la página de confirmación
+            return redirect('confirmacion')  
     else:
         form = PagoForm()
     return render(request, 'gymapp/pago.html', {'form': form})
+
+
+
+def monedas(request):
+    return render(request, 'gymapp/monedas.html')

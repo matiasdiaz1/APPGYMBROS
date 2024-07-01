@@ -13,12 +13,10 @@
                             {% csrf_token %}
                             {{ form|crispy }}
                             <div class="d-flex justify-content-between pb-10">
-                                <!-- Botón Crear Persona en la esquina izquierda -->
                                 <button type="submit" class="btn"
                                     style="background-color: #7241b4; color: white; border-color: #7241b4;">
                                     Crear Persona
                                 </button>
-                                <!-- Botón Volver en la esquina derecha -->
                                 <a href="{% url 'personas' %}" class="btn btn-secondary">
                                     Volver
                                 </a>
