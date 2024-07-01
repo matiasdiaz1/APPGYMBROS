@@ -6,6 +6,8 @@ from django.views.decorators.http import require_POST
 from .cart import Cart
 import os
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     mancuernas = Mancuerna.objects.all()[:6]  
@@ -129,32 +131,38 @@ def cart_detail(request):
     return render(request, 'gymapp/cart_detail.html', {'cart': cart})
 
 
+@login_required
 def direccion_entrega(request):
     if request.method == "POST":
         form = DireccionForm(request.POST)
         if form.is_valid():
-            # Guardar la dirección en la sesión o en la base de datos
             request.session['direccion'] = form.cleaned_data
-            return redirect('pago')  # Redirigir a la página de pago
+            return redirect('pago')
     else:
-        form = DireccionForm()
+        initial_data = {
+            'nombre': request.user.first_name + ' ' + request.user.last_name,
+            'email': request.user.email,
+        }
+        form = DireccionForm(initial=initial_data)
     return render(request, 'gymapp/direccion_entrega.html', {'form': form})
 
+@login_required
 def pago(request):
     if request.method == 'POST':
         form = PagoForm(request.POST)
         if form.is_valid():
-            # Procesar el pago aquí
-            return redirect('confirmacion')  # Redirigir a la página de confirmación
+            return redirect('confirmacion')
     else:
         form = PagoForm()
     return render(request, 'gymapp/pago.html', {'form': form})
 
 
+@login_required
 def confirmacion(request):
     cart = Cart(request)
     direccion = request.session.get('direccion', {})
-    return render(request, 'gymapp/confirmacion.html', {'cart': cart, 'direccion': direccion})
+    usuario = request.user  # Obtener el usuario logueado
+    return render(request, 'gymapp/confirmacion.html', {'cart': cart, 'direccion': direccion, 'usuario': usuario})
 
 def monedas(request):
     return render(request, 'gymapp/monedas.html')

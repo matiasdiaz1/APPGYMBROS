@@ -37,6 +37,8 @@ class CustomUserCreationForm(UserCreationForm):
     pass
 
 class DireccionForm(forms.Form):
+    nombre = forms.CharField(label='Nombre', max_length=100)
+    email = forms.EmailField(label='Email')
     direccion = forms.CharField(label='Dirección', max_length=100)
     numero = forms.CharField(label='Número', max_length=10)
     depto = forms.CharField(label='Depto/Casa/Oficina', max_length=50, required=False)
