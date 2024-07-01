@@ -14,7 +14,7 @@
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div class="d-flex justify-content-between mt-4">
-                        <input type="submit" value="Guardar Cambios" class="btn btn-custom text-light">
+                        <input type="submit" value="Guardar Cambios" class="btn " style="background-color: #7241b4; color: white; border-color: #7241b4;">
                         <a href='{% url "personas" %}' role='button' class="btn btn-secondary">Volver</a>
                     </div>
                 </form>
