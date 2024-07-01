@@ -1,59 +1,74 @@
 {% extends "gymapp/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block contenido %}
-<div class="container my-5">
-    <h2 class="text-center mb-4">Confirmación de Pedido</h2>
-    
-    <div class="card mb-4">
-        <div class="card-header bg-dark text-white">
-            <h4 class="mb-0">Detalles del Pedido</h4>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">Mancuerna</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Precio unitario</th>
-                            <th scope="col">Precio total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in cart %}
-                        <tr>
-                            <td>{{ item.mancuerna.peso }} kg</td>
-                            <td>{{ item.quantity }}</td>
-                            <td>${{ item.price }}</td>
-                            <td>${{ item.total_price }}</td>
-                        </tr>
-                        {% endfor %}
-                        <tr>
-                            <td colspan="3" class="text-end"><strong>Total</strong></td>
-                            <td><strong>${{ cart.get_total_price }}</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">Confirmación de Pedido</h2>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="mb-0">Detalles del Pedido</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col">Mancuerna</th>
+                                                <th scope="col">Cantidad</th>
+                                                <th scope="col">Precio unitario</th>
+                                                <th scope="col">Precio total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in cart %}
+                                            <tr>
+                                                <td>{{ item.mancuerna.peso }} kg</td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>${{ item.price }}</td>
+                                                <td>${{ item.total_price }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            <tr>
+                                                <td colspan="3" class="text-end"><strong>Total</strong></td>
+                                                <td><strong>${{ cart.get_total_price }}</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="mb-0">Detalle de Entrega</h4>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Nombre:</strong> {{ direccion.nombre }}</p>
+                                <p><strong>Email:</strong> {{ direccion.email }}</p>
+                                <p><strong>Dirección:</strong> {{ direccion.direccion }}</p>
+                                <p><strong>Número:</strong> {{ direccion.numero }}</p>
+                                <p><strong>Depto/Casa/Oficina:</strong> {{ direccion.depto }}</p>
+                                <p><strong>Celular:</strong> {{ direccion.celular }}</p>
+                                <p><strong>Región:</strong> {{ direccion.region }}</p>
+                                <p><strong>Comuna:</strong> {{ direccion.comuna }}</p>
+                                <p><strong>Nombre de la dirección:</strong> {{ direccion.nombre_direccion }}</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end pb-10">
+                            <a href="{% url 'index' %}" class="btn btn-secondary">
+                                Volver
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="card mb-4">
-        <div class="card-header bg-dark text-white">
-            <h4 class="mb-0">Detalle de Entrega</h4>
-        </div>
-        <div class="card-body">
-            <p><strong>Nombre:</strong> {{ direccion.nombre }}</p>
-            <p><strong>Email:</strong> {{ direccion.email }}</p>
-            <p><strong>Dirección:</strong> {{ direccion.direccion }}</p>
-            <p><strong>Número:</strong> {{ direccion.numero }}</p>
-            <p><strong>Depto/Casa/Oficina:</strong> {{ direccion.depto }}</p>
-            <p><strong>Celular:</strong> {{ direccion.celular }}</p>
-            <p><strong>Región:</strong> {{ direccion.region }}</p>
-            <p><strong>Comuna:</strong> {{ direccion.comuna }}</p>
-            <p><strong>Instrucciones de entrega:</strong> {{ direccion.instrucciones }}</p>
-            <p><strong>Nombre de la dirección:</strong> {{ direccion.nombre_direccion }}</p>
-        </div>
-    </div>
-</div>
 {% endblock %}

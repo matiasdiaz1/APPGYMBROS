@@ -39,13 +39,12 @@ class CustomUserCreationForm(UserCreationForm):
 class DireccionForm(forms.Form):
     nombre = forms.CharField(label='Nombre', max_length=100)
     email = forms.EmailField(label='Email')
-    direccion = forms.CharField(label='Dirección', max_length=100)
-    numero = forms.CharField(label='Número', max_length=10)
-    depto = forms.CharField(label='Depto/Casa/Oficina', max_length=50, required=False)
+    region = forms.ChoiceField(label='Región', choices=[('', 'Selecciona una región'), ('Bio bio', 'Bio bio')])
+    comuna = forms.ChoiceField(label='Comuna', choices=[('', 'Selecciona una comuna'), ('Coronel', 'Coronel')])
+    calle = forms.CharField(label='Calle', max_length=100, help_text='Ingresa el nombre de la calle y número')
+    numero = forms.CharField(label='Número', max_length=10, help_text='Ingresa el número de la calle')
+    depto = forms.CharField(label='Dpto. / Casa (opcional)', max_length=50, required=False, help_text='Ejem. Casa 3, Dpto 101.')
     celular = forms.CharField(label='Celular', max_length=15)
-    region = forms.ChoiceField(label='Región', choices=[('Region 1', 'Region 1'), ('Region 2', 'Region 2')])  # Añade tus regiones
-    comuna = forms.ChoiceField(label='Comuna', choices=[('Comuna 1', 'Comuna 1'), ('Comuna 2', 'Comuna 2')])  # Añade tus comunas
-    instrucciones = forms.CharField(label='Instrucciones de entrega', widget=forms.Textarea, required=False)
     nombre_direccion = forms.CharField(label='Nombre de la dirección', max_length=100)
     
 class PagoForm(forms.Form):

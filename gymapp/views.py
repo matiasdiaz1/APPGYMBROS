@@ -161,7 +161,7 @@ def pago(request):
 def confirmacion(request):
     cart = Cart(request)
     direccion = request.session.get('direccion', {})
-    usuario = request.user  # Obtener el usuario logueado
+    usuario = request.user  
     return render(request, 'gymapp/confirmacion.html', {'cart': cart, 'direccion': direccion, 'usuario': usuario})
 
 def monedas(request):
