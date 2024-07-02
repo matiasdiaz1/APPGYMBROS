@@ -133,7 +133,6 @@ def cart_add(request, mancuerna_id):
     mancuerna = get_object_or_404(Mancuerna, id=mancuerna_id)
     quantity = int(request.POST.get('quantity', 1))
     
-    # Verifica si hay suficiente stock
     if quantity > mancuerna.stock:
         messages.error(request, f"Lo sentimos, solo hay {mancuerna.stock} unidades disponibles.")
         return redirect('cart_detail')
