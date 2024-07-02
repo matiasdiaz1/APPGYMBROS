@@ -6,7 +6,13 @@ from django.views.decorators.http import require_POST
 from .cart import Cart
 import os
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required , user_passes_test
+
+def es_admin(usuario):
+    if not usuario.is_staff:
+        messages.error(usuario.request, "No tienes permiso para acceder a esta página.")
+        return False
+    return True
 
 
 def index(request):
@@ -216,7 +222,6 @@ def clear_cart(request):
 
 
 
-@login_required
+@user_passes_test(es_admin, login_url='index')
 def confirmacion_admin(request):
-
     return render(request, 'gymapp/confirmacion_admin.html')

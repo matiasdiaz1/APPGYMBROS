@@ -12,10 +12,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -36,6 +33,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'confirmacion' %}">Mis pedidos</a>
                     </li>
+                    {% if user.is_staff %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Administración</a>
@@ -48,6 +46,7 @@
                             <a class="dropdown-item drophovercustom" href="{% url 'monedas' %}">API</a>
                         </div>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'cart_detail' %}">
                             Carrito <span class="badge bg-secondary">{{ request.session.cart|length }}</span>
@@ -70,10 +69,8 @@
             </div>
         </div>
     </nav>
-    
 
     {% if messages %} 
-
         {% for message in messages %}
             {% if message.level == 25 %}
                 <script>
@@ -86,7 +83,6 @@
                 </script>
             {% endif %}
             {% if message.level == 30 %}
-
                 <script>
                     Swal.fire({
                         title: 'Alerta!',
@@ -97,32 +93,35 @@
                 </script>
             {% endif %}
             {% if message.level == 40 %}
-
-            <script>
-                Swal.fire({
-                    title: 'Importante!',
-                    text: '{{message}}',
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                })
-            </script>
-        {% endif %}
+                <script>
+                    Swal.fire({
+                        title: 'Importante!',
+                        text: '{{message}}',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
+                </script>
+            {% endif %}
         {% endfor %}
+    {% endif %}
 
-{% endif %}
+    {% if not user.is_staff and request.path == '/confirmacionadmin/' %}
+    <script>
+        Swal.fire({
+            title: 'Acceso denegado',
+            text: 'No tienes permiso para acceder a esta página.',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{% url 'index' %}";
+            }
+        });
+    </script>
+    {% endif %}
 
     {% block contenido %}
-
-
-
-
     {% endblock contenido %}
-
-
-
-
-
-
 
 </body>
 

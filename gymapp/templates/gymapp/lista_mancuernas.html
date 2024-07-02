@@ -15,8 +15,7 @@
                         <th scope="col">Peso</th>
                         <th scope="col">Precio</th>
                         <th scope="col">Stock</th>
-                        <th scope="col">Propietario</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Estado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,14 +25,11 @@
                         <td>{{ mancuerna.peso }} kg</td>
                         <td>${{ mancuerna.precio }}</td>
                         <td>{{ mancuerna.stock }}</td>
-                        <td>{{ mancuerna.propietario|default:"Sin asignar" }}</td>
                         <td>
-                            <a href="{% url 'asignar_mancuerna' mancuerna.id %}" role="button" class="btn btn-info btn-sm" style="background-color: #7241b4; color: white; border-color: #7241b4;">Asignar</a>
+
                             {% if mancuerna.stock > 0 %}
                                 <form action="{% url 'cart_add' mancuerna.id %}" method="post" class="d-inline">
                                     {% csrf_token %}
-                                    <input type="number" name="quantity" value="1" min="1" max="{{ mancuerna.stock }}" class="form-control form-control-sm d-inline-block" style="width: 60px;">
-                                    <button type="submit" class="btn btn-success btn-sm">Añadir al carrito</button>
                                 </form>
                             {% else %}
                                 <span class="badge bg-danger">Agotado</span>
